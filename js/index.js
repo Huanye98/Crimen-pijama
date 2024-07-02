@@ -16,8 +16,9 @@
     let mainIntervalId = null
     let enemyInterval = null
 
+    //nodes
     let lives = document.querySelector("#lives") 
-
+    let points = document.querySelector("#points")
 
 
 //Start
@@ -39,7 +40,8 @@ function startGame(){
 
     enemyInterval = setInterval(()=>{
         enemySpawn()
-    },5000)
+    },1100)
+   
 }
 
 //todo lo que pase 60veces por segundo
@@ -50,9 +52,9 @@ function gameloop(){
     PlayerEnemycollision()
     projectileEnemycollision()
     EnemyDeletion()
-    killEnemy()
     gameOver()
     bulletDeletion()
+    console.log(charaObj.isJumping)
 }
 
 
@@ -104,6 +106,12 @@ function gameloop(){
                 enemy.lives--
                 projectilesArr.splice(pindex,1)
                 projectile.node.remove()
+                if(enemy.lives <=0){
+                    enemyArr.splice(eIndex,1)
+                    enemy.node.remove()
+                    points.innerText++
+                }
+    
                 }
             })
         })
@@ -111,10 +119,10 @@ function gameloop(){
 
     function EnemyDeletion(){
         let firstEnemy = enemyArr[0]
-        if (firstEnemy && firstEnemy.x <= 0-firstEnemy.w){
+        if (firstEnemy && (firstEnemy.x - firstEnemy.w) <= 0){
             enemyArr.shift()
             firstEnemy.node.remove()
-            badGuyObj.lives--
+            charaObj.lives--
         }
     }
     function bulletDeletion(){
@@ -126,15 +134,6 @@ function gameloop(){
             }
         }
         
-    }
-    function killEnemy(){
-        enemyArr.forEach(e=>{
-            if(e.lives ===0){
-                enemyArr.splice(e,1)
-                e.node.remove()
-            }
-
-        })
     }
     function gameOver(){
         if(charaObj.lives === 0){

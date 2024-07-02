@@ -8,7 +8,7 @@ class Enemy{
             this.h = 50
             this.speed =12
         }else if(type === "medium"){
-            this.node.src = "./images/Fall (32x32).png"
+            this.node.src = "./images/frog.gif"
             this.lives = 3
             this.w = 100
             this.h = 100
