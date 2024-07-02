@@ -1,0 +1,94 @@
+body {
+    margin:0;
+}
+h1{
+    text-align: center;
+}
+
+#game-container{
+    border: 1px solid red;
+    width: 1080px;
+    height: 720px;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 50px;
+}
+
+
+/* Start */
+#start-screen{
+    border: 1px solid blue;
+    position: absolute;
+    width: 1000px;
+    height: 700px;
+    display: flex;
+
+}
+#start-content{
+    margin-left: 25%;
+    margin-top: 25%;
+    border: 1px solid blue;
+    position: absolute;
+    width: 500px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+#start-btn {
+    background-color: green;
+    color: white;
+    padding: 20px;
+    font-size: 20px;
+    margin-top: 40px;
+    border-radius: 10px; 
+}
+
+
+
+
+/* Game */
+#game-screen{
+    background-color: black;
+    display: none;
+    position: relative;
+}
+#game-box{
+    border: 1px solid turquoise;
+    width: 1000px;
+    height: 700px;
+    background-color: darkgray;
+    position: relative; /* permite posicionar los elementos de forma absoluta dentro del game-box */
+    overflow: visible; /* previene que los elementos salgan visualmente del game-box */
+    user-select: none; /* previene que los elementos del game-box sean resaltados al hacer click */
+
+}
+
+
+
+
+
+
+/* End */
+#end-screen{
+    border: 1px solid greenyellow;
+    position: relative;
+
+    display: none;
+    width: 1000px;
+    height: 700px;
+}
+#list-container{
+height: 100%;
+
+}
+#replay{
+    left: 75%;
+    height: 50px;
+    width: 70px;
+}
+
+
