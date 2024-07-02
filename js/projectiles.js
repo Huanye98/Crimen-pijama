@@ -1,11 +1,11 @@
 class Projectile{
     constructor(positionX,positionY){
         this.node = document.createElement("img")
-        this.node.src = "./images/Fall (32x32).png"
+        this.node.src = "./images/Ice Particle.png"
         gameBox.append(this.node)
 
-        this.x = positionX
-        this.y = positionY
+        this.x = positionX+50
+        this.y = positionY+50
         this.w = 10
         this.h = 10
         console.log(this.x)
@@ -19,7 +19,7 @@ class Projectile{
         this.node.style.height = `${this.h}px`
     }
      projectileMovement(){
-        this.x += 2
+        this.x += 8
         this.node.style.left = `${this.x}px`
         console.log("pew pew")
     }
