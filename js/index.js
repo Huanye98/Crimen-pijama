@@ -1,12 +1,16 @@
 
 //Variables
     //screen
-    startScreen = document.querySelector("#start-screen")
-    endScreen = document.querySelector("#end-screen")
-    gameScreen = document.querySelector("#game-screen")
+    let startScreen = document.querySelector("#start-screen")
+    let endScreen = document.querySelector("#end-screen")
+    let gameScreen = document.querySelector("#game-screen")
+    //BG
+    let back = document.querySelector("#back")
+    let middle = document.querySelector("#middle")
+    let front = document.querySelector("#front")
     
     //gamebox
-    gameBox = document.querySelector("#game-box")
+    let gameBox = document.querySelector("#game-box")
     //objects
     let charaObj  = null
     let badGuyObj = null
@@ -26,12 +30,14 @@
 function startGame(){
     //set up 
     startScreen.style.display = "none"
+    endScreen.style.display = "none"
     gameScreen.style.display = "flex"
 
 
     //objcts
-    charaObj = new Player()
-
+            charaObj = new Player()
+       
+    
     //gameloop
     mainIntervalId = setInterval(()=>{
         gameloop()
@@ -40,6 +46,8 @@ function startGame(){
 
     enemyInterval = setInterval(()=>{
         enemySpawn()
+     
+        
     },1100)
    
 }
@@ -54,14 +62,12 @@ function gameloop(){
     EnemyDeletion()
     gameOver()
     bulletDeletion()
-    console.log(charaObj.isJumping)
 }
 
 
 
 //functions
     function enemySpawn(){
-        
         let sizeType = Math.floor(Math.random()*3)
         if(sizeType === 0){
             let smallEnemy = new Enemy("small")
@@ -141,9 +147,36 @@ function gameloop(){
             clearInterval(enemyInterval)
             endScreen.style.display = "flex"
             gameScreen.style.display = "none"
+            mainIntervalId = null
+            enemyInterval = null
         }
     }
+    function resetGame(){
+        //chara
+        charaObj.node.remove()
+        charaObj = null
+        //ui 
+        points.innerText = "0"
+        lives.innerText= 3
+        document.querySelector("#hp3").style.display = "flex"
+        document.querySelector("#hp2").style.display = "flex"
+        document.querySelector("#hp1").style.display = "flex"
 
+        //enemies
+
+        for (let i = 0; i<enemyArr.length;i++){
+            enemyArr[i].node.remove()
+        }
+        enemyArr = []
+        for (let y = 0; y<projectilesArr.length;y++){
+            projectilesArr[y].node.remove()
+        }
+        projectilesArr = []
+        //start
+        startGame()
+
+
+    }
 
 
 
@@ -161,6 +194,10 @@ function gameloop(){
     startBtn.addEventListener("click",()=>{
         startGame()
     })
+    //replay
+    replay.addEventListener("click",()=>{
+        resetGame()
+    })
 
     //Player movement
     window.addEventListener("keydown",(e)=>{
@@ -175,8 +212,7 @@ function gameloop(){
         }
 
     })
-
-
-    gameBox.addEventListener("click",()=>{
-        shoot()
+    
+     gameBox.addEventListener("mousedown",()=>{
+         shoot()
     })

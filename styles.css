@@ -1,8 +1,10 @@
 body {
     margin:0;
+    
 }
 h1{
     text-align: center;
+    font-family: "Gordita medium";
 }
 
 #game-container{
@@ -28,23 +30,34 @@ h1{
 
 }
 #start-content{
-    margin-left: 25%;
-    margin-top: 25%;
-    border: 1px solid blue;
+    width: auto;
+    height: auto;
     position: absolute;
-    width: 500px;
-    height: 200px;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: left;
+    flex-direction: column;
+    margin: 50% 50%;
 }
 #start-btn {
-    background-color: green;
+    background-color: pink;
     color: white;
     padding: 20px;
     font-size: 20px;
-    margin-top: 40px;
     border-radius: 10px; 
+    width: 225px;
+    border: 3px solid rgb(231, 141, 141);
+    font-family: "Gordita medium";
+    font-size: 30px;
+}
+#name-input{
+width: 160px;
+}
+input::placeholder{
+    font-family: "Gordita regular";
+}
+#submit{
+    padding-top: 5px;
 }
 
 
@@ -52,7 +65,7 @@ h1{
 
 /* Game */
 #game-screen{
-    background-color: black;
+    background-color: transparent;
     display: none;
     position: relative;
 }
@@ -60,13 +73,49 @@ h1{
     border: 1px solid turquoise;
     width: 1000px;
     height: 700px;
-    background-color: darkgray;
     position: relative; /* permite posicionar los elementos de forma absoluta dentro del game-box */
-    overflow: visible; /* previene que los elementos salgan visualmente del game-box */
+    overflow: hidden; /* previene que los elementos salgan visualmente del game-box */
     user-select: none; /* previene que los elementos del game-box sean resaltados al hacer click */
 
 }
 
+#back, #middle, #front {
+    width: 8643px;
+    height: 100%;
+    position: absolute;
+    background-size: cover;
+    background-repeat: no-repeat;
+    top: 0;
+}
+#middle,#front{
+    transition: transform 0.1s linear;
+    margin-left: -500px;
+}
+#back{
+    background-image:url("./images/background_layer_1.png") ;
+    z-index: -2;
+    width: 100%;
+    background-size: 100% 100%;
+
+}
+#middle{
+    background-image:url("./images/background_layer_2.png") ;   
+    z-index: -1;
+
+}
+#front{
+    background-image:url("./images/background_layer_3.png") ;
+    z-index: 0;
+
+}
+#ui{
+    z-index: 1;
+    position: absolute;
+}
+#hp{
+    display: flex;
+    flex-direction: row;
+}
 
 
 
@@ -80,15 +129,28 @@ h1{
     display: none;
     width: 1000px;
     height: 700px;
+    justify-content: space-between;
 }
 #list-container{
 height: 100%;
+border: 1px red solid;
+width: 33vw;
+
 
 }
 #replay{
-    left: 75%;
+    left: 50%;
+    top: 50%;
+    position: absolute;
     height: 50px;
     width: 70px;
+    border: 1px red solid;
+
 }
-
-
+#credits{
+    border: 1px red solid;
+    height: auto;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
