@@ -23,6 +23,9 @@ class Player {
     this.middleX = 0;
     this.frontX = 0;
   }
+  idle(){
+    this.node = document.createElement("img")
+  }
   moveLeft() {
     if(this.x <= 50){
       this.x = 50

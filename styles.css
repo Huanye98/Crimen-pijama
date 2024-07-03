@@ -25,9 +25,10 @@ h1{
 
 /* Start */
 #start-screen{
+    background-image: url(./images/ooooo.webp);
     border: 1px solid blue;
     position: absolute;
-    width: 1000px;
+    width: 1080px;
     height: 720px;
     display: flex;
 
@@ -43,8 +44,9 @@ h1{
 
     align-self: center;
     margin-left: 40%;
+    margin-top: 40%;
 }
-#start-btn {
+#start-btn {    
     background-color: pink;
     color: white;
     padding: 20px;
@@ -58,11 +60,15 @@ h1{
 #name-input{
 width: 160px;
 height: 20px;
+border-radius: 4px;
+border: rgb(231, 141, 141) solid 1px;
 }
 #name-submit{
     font-family: "Gordita thin";
     font-weight: 700;
     height: 25px;
+    border-radius: 3px;
+    border: rgb(231, 141, 141) solid 1px;
 }
 input::placeholder{
     font-family: "Gordita regular";
