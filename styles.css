@@ -1,14 +1,17 @@
 body {
     margin:0;
-    
+    font-family: "Gordita regular";
 }
 h1{
     text-align: center;
     font-family: "Gordita medium";
+    font-size: 45px;
+    margin-bottom: 0;
+    position: relative;
+    top: 30px;
 }
 
 #game-container{
-    border: 1px solid red;
     width: 1080px;
     height: 720px;
     display: flex;
@@ -25,7 +28,7 @@ h1{
     border: 1px solid blue;
     position: absolute;
     width: 1000px;
-    height: 700px;
+    height: 720px;
     display: flex;
 
 }
@@ -37,7 +40,9 @@ h1{
     align-items: center;
     justify-content: left;
     flex-direction: column;
-    margin: 50% 50%;
+
+    align-self: center;
+    margin-left: 40%;
 }
 #start-btn {
     background-color: pink;
@@ -52,14 +57,30 @@ h1{
 }
 #name-input{
 width: 160px;
+height: 20px;
+}
+#name-submit{
+    font-family: "Gordita thin";
+    font-weight: 700;
+    height: 25px;
 }
 input::placeholder{
     font-family: "Gordita regular";
 }
 #submit{
     padding-top: 5px;
+    display: flex;
+    align-items: center;
 }
-
+#intro-chara{
+    height: 300px;
+    position: absolute;
+    top: 720px;
+    transition: top 1s ease-in ;
+}
+#intro-chara.visible{
+    top: 300px;
+}
 
 
 
@@ -72,7 +93,7 @@ input::placeholder{
 #game-box{
     border: 1px solid turquoise;
     width: 1000px;
-    height: 700px;
+    height: 720px;
     position: relative; /* permite posicionar los elementos de forma absoluta dentro del game-box */
     overflow: hidden; /* previene que los elementos salgan visualmente del game-box */
     user-select: none; /* previene que los elementos del game-box sean resaltados al hacer click */
@@ -112,11 +133,22 @@ input::placeholder{
     z-index: 1;
     position: absolute;
 }
+#ui h3{
+    color: aliceblue;
+    padding-left: 15px;
+    margin: 5px auto;
+    font-size: 30px;
+}
 #hp{
+    padding-left: 4px;
     display: flex;
     flex-direction: row;
 }
-
+#hp *{
+    padding: 0 5px;
+    margin: 0 auto;
+    height: 50px;
+}
 
 
 
@@ -128,29 +160,56 @@ input::placeholder{
 
     display: none;
     width: 1000px;
-    height: 700px;
+    height: 720px;
     justify-content: space-between;
 }
 #list-container{
 height: 100%;
-border: 1px red solid;
-width: 33vw;
 
+width: 33vw;
+}
+
+#list-container h2{
+margin-top: 5px;
+margin-left: 10px;
+font-size: 30px;
+text-decoration: underline;
+}
+
+
+#credits{
+    height: auto;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    padding: 0 5px;
 
 }
 #replay{
-    left: 50%;
-    top: 50%;
-    position: absolute;
-    height: 50px;
-    width: 70px;
-    border: 1px red solid;
-
+    height: 60px;
+    width: 100%;
+    margin-bottom: 5px;
+    font-family: "Gordita medium";
+    font-weight: 600;
+    font-size: 25px;
+    border: 3px solid rgb(231, 141, 141);
+    background-color: pink;
+    color: white;
+    border-radius: 15px;
 }
-#credits{
-    border: 1px red solid;
-    height: auto;
-    position: absolute;
-    bottom: 0;
-    right: 0;
+
+#credits h3{
+
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 15px;
+    text-decoration: underline;
+}
+#art{
+    font-size: 15px;
+    list-style-type: none;
+    margin-top:  0;
+    padding-left: 0;
 }

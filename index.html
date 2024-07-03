@@ -20,7 +20,7 @@
                     <input type="text" name="name" id="name-input" placeholder="  Who's this cutie?">
                     <input type="submit" id="name-submit" value="submit" >
                 </div>
-                
+                <img src="./images/Jump (32x32).png" alt="" id="intro-chara">
             </div>
         </div>
 
@@ -34,6 +34,7 @@
                 <div id="middle"></div>
                 <div id="front"></div>
                 <div id="ui">
+                    <h3>Player: <span id="player-name"></span></h3>
                     <h3>Lives: <span id="lives">3</span></h3>
                     <h3 id="score">Score: <span id="points">0</span></h3>
                     <div id="hp">
@@ -54,15 +55,16 @@
         <div id="end-screen">
             
             <div id="list-container">
-                <h2>top score</h2>
+                <h2>Scoreboard</h2>
                 <ul id="list">
 
                 </ul>
             </div>
-            <button id="replay">Replay</button>
+            
             <div id="credits">
+                <button id="replay">Replay!</button>
                 <h3>Art assets by:</h3>
-                <ul>
+                <ul id="art">
                     <li>Pixel Frog - Sprouts Lands - itch.io</li>
                     <li>Cup nooble -Pixel Adventure - itch.io</li>
                     <li>brullov - Oak Woods - itch.io</li>

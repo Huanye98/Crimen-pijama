@@ -24,6 +24,10 @@ class Player {
     this.frontX = 0;
   }
   moveLeft() {
+    if(this.x <= 50){
+      this.x = 50
+      this.node.style.left = `${this.x}px`;
+    }
     this.x -= 50;
     this.node.style.left = `${this.x}px`;
     charaObj.node.src = "./images/left.gif"
@@ -31,6 +35,10 @@ class Player {
     
   }
   moveRight() {
+    if(this.x >= gameBox.offsetWidth - 100){
+      this.x = gameBox.offsetWidth -100
+      this.node.style.left = `${this.x}px`;
+    }
     this.x += 50;
     this.node.style.left = `${this.x}px`;
     charaObj.node.src = "./images/right.gif"
@@ -98,6 +106,7 @@ class Player {
   startInvulnerable() {
     this.isInvulnerable = true;
     this.node.style.backgroundColor = "red";
+    this.node.style.padding = "0"
     setTimeout(() => {
       this.isInvulnerable = false;
       this.node.style.backgroundColor = "transparent";
