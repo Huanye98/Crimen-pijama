@@ -18,10 +18,13 @@ let projectilesArr = [];
 //intervals
 let mainIntervalId = null;
 let enemyInterval = null;
+let isSpawning = true;
 
 //nodes
 let lives = document.querySelector("#lives");
 let points = document.querySelector("#points");
+let enemyCount = document.querySelector("#enemyCount");
+
 //local storage
 const scoreboard = document.querySelector("#scoreboard");
 let playerName = null;
@@ -56,27 +59,46 @@ function verifyLocalStorage() {
 //todo lo que pase 60veces por segundo
 function gameloop() {
   enemyArr.forEach((e) => e.movement());
-  projectilesArr.forEach((e) => e.projectileMovement());
   charaObj.gravity();
   PlayerEnemycollision();
   projectileEnemycollision();
   EnemyDeletion();
   gameOver();
   bulletDeletion();
+
+  let numEnemyCount = Number(enemyCount.innerText)
+  if (numEnemyCount < 25) {
+    projectilesArr.forEach((e) => e.projectileMovement("normal"));
+  } else if (numEnemyCount  >= 25 && numEnemyCount < 50) {
+    projectilesArr.forEach((e) => e.projectileMovement(1));
+  } else if (numEnemyCount  >= 50) {
+    projectilesArr.forEach((e) => e.projectileMovement(2));
+  }
 }
 
 //functions
 function enemySpawn() {
-  let sizeType = Math.floor(Math.random() * 3);
-  if (sizeType === 0) {
-    let smallEnemy = new Enemy("small");
-    enemyArr.push(smallEnemy);
-  } else if (sizeType === 1) {
-    let mediumEnemy = new Enemy("medium");
-    enemyArr.push(mediumEnemy);
-  } else if (sizeType === 2) {
-    let bigEnemy = new Enemy("big");
-    enemyArr.push(bigEnemy);
+  if (enemyCount.innerText < 50 && isSpawning === true) {
+    let sizeType = Math.floor(Math.random() * 3);
+    if (sizeType === 0) {
+      let smallEnemy = new Enemy("small");
+      enemyArr.push(smallEnemy);
+    } else if (sizeType === 1) {
+      let mediumEnemy = new Enemy("medium");
+      enemyArr.push(mediumEnemy);
+    } else if (sizeType === 2) {
+      let bigEnemy = new Enemy("big");
+      enemyArr.push(bigEnemy);
+    }
+  } else if (enemyCount.innerText >= 50 && isSpawning === true) {
+    let boss = new Enemy("boss");
+    enemyArr.push(boss);
+    isSpawning = false;
+  }
+  let numEnemyCount = Number(enemyCount.innerText)
+  if(numEnemyCount >= 25){
+    let skyEnemy = new Enemy("sky")
+    enemyArr.push(skyEnemy)
   }
 }
 function shoot() {
@@ -112,6 +134,15 @@ function projectileEnemycollision() {
           enemyArr.splice(eIndex, 1);
           enemy.node.remove();
           points.innerText++;
+          enemyCount.innerText++
+        }
+        if (enemy.lives <= 0 && enemy.type === "boss") {
+          enemyArr.splice(eIndex, 1);
+          enemy.node.remove();
+          points.innerText++;
+          enemyCount.innerText++
+          gameOver();
+          alert("congrats you won!");
         }
       }
     });
@@ -157,14 +188,13 @@ function updateScore() {
   // const finalName = localStorage.getItem("name")
 
   //updating ul
-  scoreboard.innerHTML = null
+  scoreboard.innerHTML = null;
 
-  allScoreArr.forEach(e=>{
+  allScoreArr.forEach((e) => {
     const nameScore = document.createElement("li");
-    nameScore.innerHTML = `${e.playerName} : ${e.score}`
+    nameScore.innerHTML = `${e.playerName} : ${e.score}`;
     scoreboard.append(nameScore);
   });
-  
 }
 function gameOver() {
   if (charaObj.lives === 0) {
@@ -174,7 +204,7 @@ function gameOver() {
     gameScreen.style.display = "none";
     mainIntervalId = null;
     enemyInterval = null;
-    updateScore() 
+    updateScore();
   }
 }
 function resetGame() {

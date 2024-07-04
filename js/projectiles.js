@@ -1,5 +1,5 @@
 class Projectile{
-    constructor(positionX,positionY){
+    constructor(positionX,positionY,type){
         this.node = document.createElement("img")
         this.node.src = "./images/Ice Particle.png"
         gameBox.append(this.node)
@@ -15,8 +15,18 @@ class Projectile{
         this.node.style.width = `${this.w}px`
         this.node.style.height = `${this.h}px`
     }
-     projectileMovement(){
+     projectileMovement(type){
+        if(type === "normal"){
         this.x += 8
         this.node.style.left = `${this.x}px`
+        }else if(type == 1){
+            this.x += 16
+            this.node.style.left = `${this.x}px`
+            this.node.style.backgroundColor = "red"
+        }else if(type == 2){
+            this.x += 32
+            this.node.style.left = `${this.x}px`
+            this.node.style.backgroundColor = "blue"
+        }
     }
 }
