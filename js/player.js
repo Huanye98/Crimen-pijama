@@ -24,7 +24,7 @@ class Player {
     this.frontX = 0;
   }
   idle(){
-    this.node = document.createElement("img")
+    this.node.src = "./images/idle.gif"
   }
   moveLeft() {
     if(this.x <= 50){

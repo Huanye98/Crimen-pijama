@@ -9,6 +9,7 @@ h1{
     margin-bottom: 0;
     position: relative;
     top: 30px;
+    display: none;
 }
 
 #game-container{
@@ -78,16 +79,8 @@ input::placeholder{
     display: flex;
     align-items: center;
 }
-#intro-chara{
-    height: 300px;
-    position: absolute;
-    top: 720px;
-    transition: top 1s ease-in ;
-}
-#intro-chara.visible{
-    top: 300px;
-}
 #Controls{
+    width: 30%;
     position: absolute;
     left: 0;
     bottom: 0;
@@ -98,7 +91,6 @@ input::placeholder{
 }
 #Controls p{
     margin-top: 5px;
-    width: 45%;
 }
 
 

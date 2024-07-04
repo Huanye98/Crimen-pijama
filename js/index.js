@@ -25,6 +25,7 @@ let skyEnemyInterval = null
 let lives = document.querySelector("#lives");
 let points = document.querySelector("#points");
 let enemyCount = document.querySelector("#enemyCount");
+let gameName = document.querySelector("#player-name")
 
 //local storage
 const scoreboard = document.querySelector("#scoreboard");
@@ -162,7 +163,10 @@ function EnemyDeletion() {
   if (firstEnemy && firstEnemy.x - firstEnemy.w <= 0) {
     enemyArr.shift();
     firstEnemy.node.remove();
-    charaObj.lives--;
+  }
+  if(firstEnemy && firstEnemy.type === "sky" && firstEnemy.y >= gameBox.offsetHeight){
+    enemyArr.shift()
+    firstEnemy.node.remove()
   }
 }
 function bulletDeletion() {
@@ -178,25 +182,27 @@ function updateScore() {
   //recibir local storage y parse
   const allScoresString = localStorage.getItem("score");
   const allScoreArr = JSON.parse(allScoresString);
+  console.log(allScoreArr);
   if (playerName === null) {
     playerName = "Energúmeno";
   }
-  const newScore = { playerName: playerName, score: points.innerText };
+  const newScore = { userName: playerName, score: points.innerText };
+  console.log(allScoreArr);
   allScoreArr.push(newScore);
+  console.log(allScoreArr);
   allScoreArr.sort((elemento1, elemento2) => {
     return elemento2.score - elemento1.score;
   });
   allScoreArr.splice(5, allScoreArr.length);
-  console.log(allScoreArr);
+ 
   let newString = JSON.stringify(allScoreArr);
   localStorage.setItem("score", newString);
 
   //updating ul
   scoreboard.innerHTML = null;
-
   allScoreArr.forEach((e) => {
     const nameScore = document.createElement("li");
-    nameScore.innerHTML = `${e.playerName} : ${e.score}`;
+    nameScore.innerHTML = `${e.userName} : ${e.score}`;
     scoreboard.append(nameScore);
   });
 }
@@ -253,6 +259,8 @@ let replay = document.querySelector("#replay");
 startBtn.addEventListener("click", () => {
   startGame();
   playBGM();
+  document.querySelector("h1").style.display = "block"
+  gameName.innerText = playerName
 });
 //replay
 replay.addEventListener("click", () => {
@@ -271,9 +279,9 @@ window.addEventListener("keydown", (e) => {
   if (e.code === "Space") {
     charaObj.jump();
   }
-});
-window.addEventListener("keyup", () => {
-  charaObj.Idle();
+  window.addEventListener("keyup",()=>{
+    charaObj.idle()
+  })
 });
 //shoot
 gameBox.addEventListener("mousedown", () => {
@@ -286,7 +294,6 @@ nameSubmit.addEventListener("click", () => {
   nameInput.placeholder = "Name saved!";
   nameInput.value = "";
   nameInput.style.backgroundColor = "pink";
-  nameInput.placeholder.style.color = "white";
 });
 
 //audio
