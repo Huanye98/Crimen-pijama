@@ -113,6 +113,6 @@ class Player {
     setTimeout(() => {
       this.isInvulnerable = false;
       this.node.style.backgroundColor = "transparent";
-    }, 1000);
+    }, 1500);
   }
 }

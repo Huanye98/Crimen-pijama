@@ -19,6 +19,7 @@ let projectilesArr = [];
 let mainIntervalId = null;
 let enemyInterval = null;
 let isSpawning = true;
+let skyEnemyInterval = null
 
 //nodes
 let lives = document.querySelector("#lives");
@@ -48,7 +49,11 @@ function startGame() {
 
   enemyInterval = setInterval(() => {
     enemySpawn();
+  
   }, 1100);
+  skyEnemyInterval = setInterval (()=>{
+    skyEnemy();
+  },600)
 }
 function verifyLocalStorage() {
   if (!localStorage.getItem("score")) {
@@ -66,12 +71,12 @@ function gameloop() {
   gameOver();
   bulletDeletion();
 
-  let numEnemyCount = Number(enemyCount.innerText)
+  let numEnemyCount = Number(enemyCount.innerText);
   if (numEnemyCount < 25) {
     projectilesArr.forEach((e) => e.projectileMovement("normal"));
-  } else if (numEnemyCount  >= 25 && numEnemyCount < 50) {
+  } else if (numEnemyCount >= 25 && numEnemyCount < 50) {
     projectilesArr.forEach((e) => e.projectileMovement(1));
-  } else if (numEnemyCount  >= 50) {
+  } else if (numEnemyCount >= 50) {
     projectilesArr.forEach((e) => e.projectileMovement(2));
   }
 }
@@ -95,10 +100,12 @@ function enemySpawn() {
     enemyArr.push(boss);
     isSpawning = false;
   }
-  let numEnemyCount = Number(enemyCount.innerText)
-  if(numEnemyCount >= 25){
-    let skyEnemy = new Enemy("sky")
-    enemyArr.push(skyEnemy)
+}
+function skyEnemy() {
+  let numEnemyCount = Number(enemyCount.innerText);
+  if (numEnemyCount >= 25) {
+    let skyEnemy = new Enemy("sky");
+    enemyArr.push(skyEnemy);
   }
 }
 function shoot() {
@@ -115,6 +122,7 @@ function PlayerEnemycollision() {
       e.y + e.h > charaObj.y
     ) {
       charaObj.takeDmg();
+      playPlayerDMG();
     }
   });
 }
@@ -134,13 +142,13 @@ function projectileEnemycollision() {
           enemyArr.splice(eIndex, 1);
           enemy.node.remove();
           points.innerText++;
-          enemyCount.innerText++
+          enemyCount.innerText++;
         }
         if (enemy.lives <= 0 && enemy.type === "boss") {
           enemyArr.splice(eIndex, 1);
           enemy.node.remove();
           points.innerText++;
-          enemyCount.innerText++
+          enemyCount.innerText++;
           gameOver();
           alert("congrats you won!");
         }
@@ -183,10 +191,6 @@ function updateScore() {
   let newString = JSON.stringify(allScoreArr);
   localStorage.setItem("score", newString);
 
-  // localStorage.setItem("score",points.innerText)
-  // const finalScore = localStorage.getItem("score")
-  // const finalName = localStorage.getItem("name")
-
   //updating ul
   scoreboard.innerHTML = null;
 
@@ -200,11 +204,14 @@ function gameOver() {
   if (charaObj.lives === 0) {
     clearInterval(mainIntervalId);
     clearInterval(enemyInterval);
+    clearInterval(skyEnemyInterval)
     endScreen.style.display = "flex";
     gameScreen.style.display = "none";
     mainIntervalId = null;
     enemyInterval = null;
     updateScore();
+    stopBGM();
+    playGameover();
   }
 }
 function resetGame() {
@@ -245,10 +252,12 @@ let replay = document.querySelector("#replay");
 //click start
 startBtn.addEventListener("click", () => {
   startGame();
+  playBGM();
 });
 //replay
 replay.addEventListener("click", () => {
   resetGame();
+  playBGM();
 });
 
 //Player movement
@@ -279,3 +288,23 @@ nameSubmit.addEventListener("click", () => {
   nameInput.style.backgroundColor = "pink";
   nameInput.placeholder.style.color = "white";
 });
+
+//audio
+let bgm = document.querySelector("#bgm");
+let playerDMG = document.querySelector("#playerDMG");
+let gameoversfx = document.querySelector("#gameoversfx");
+function playPlayerDMG() {
+  playerDMG.play();
+}
+
+function playBGM() {
+  bgm.currentTime = 0;
+  bgm.play();
+}
+function stopBGM() {
+  bgm.currentTime = 0;
+  bgm.pause();
+}
+function playGameover() {
+  gameoversfx.play();
+}
