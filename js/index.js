@@ -182,14 +182,11 @@ function updateScore() {
   //recibir local storage y parse
   const allScoresString = localStorage.getItem("score");
   const allScoreArr = JSON.parse(allScoresString);
-  console.log(allScoreArr);
   if (playerName === null) {
     playerName = "Energúmeno";
   }
-  const newScore = { userName: playerName, score: points.innerText };
-  console.log(allScoreArr);
+  const newScore = { userName: playerName, score: points.innerText }
   allScoreArr.push(newScore);
-  console.log(allScoreArr);
   allScoreArr.sort((elemento1, elemento2) => {
     return elemento2.score - elemento1.score;
   });
@@ -227,6 +224,7 @@ function resetGame() {
   //ui
   points.innerText = "0";
   lives.innerText = 3;
+  enemyCount.innerText = "0"
   document.querySelector("#hp3").style.display = "flex";
   document.querySelector("#hp2").style.display = "flex";
   document.querySelector("#hp1").style.display = "flex";

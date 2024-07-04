@@ -34,7 +34,7 @@ class Enemy {
       this.lives = 50;
       this.w = 500;
       this.h = 500;
-      this.speed = 3;
+      this.speed = 2;
       
       this.x = gameBox.offsetWidth;
       this.y = gameBox.offsetHeight - this.h;
