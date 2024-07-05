@@ -144,7 +144,7 @@ Cute "Metal Slug" like game, where you are a pink character that needs to clear 
 [Sketch Image](../crimen-pijama/images/Captura%20de%20pantalla%202024-07-05%20114152.png)
 
 ### Slides
-[Link](www.your-slides-url-here.com)
+[Link](https://docs.google.com/presentation/d/1ww1bBHYHk8g_oC8-yof66a3O5tG3kyPlMgcI5m89-dc/edit?usp=sharing)
 
 ## Deploy
 [Link](https://huanye98.github.io/Crimen-pijama/)

@@ -166,7 +166,7 @@ function projectileEnemycollision() {
 }
 function EnemyDeletion() {
   let firstEnemy = enemyArr[0];
-  if (firstEnemy.type === "sky") {
+  if (firstEnemy && firstEnemy.type === "sky") {
     if (firstEnemy.y >= gameBox.offsetHeight) {
       enemyArr.shift();
       firstEnemy.node.remove();
