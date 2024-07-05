@@ -31,10 +31,10 @@ class Enemy {
       this.y = gameBox.offsetHeight - this.h;
     } else if (type === "boss") {
       this.node.src = "./images/bossIdle.gif";
-      this.lives = 50;
+      this.lives = 20;
       this.w = 500;
       this.h = 500;
-      this.speed = 2;
+      this.speed = 1;
       
       this.x = gameBox.offsetWidth;
       this.y = gameBox.offsetHeight - this.h;
@@ -57,20 +57,20 @@ class Enemy {
     this.node.style.position = "absolute";
   }
   movement() {
-    if (this.type === "small" || this.type === "medium" || this.type === "big" ) {
+    if (this.type === "small" || this.type === "medium" || this.type === "big" || this.type === "boss") {
       this.x -= this.speed;
       this.node.style.left = `${this.x}px`;
-    } else if (this.type === "boss"){
-      setTimeout(() => {
-        this.speed = 3;
-        this.x -= this.speed;
-        this.node.style.left = `${this.x}px`;
-      }, 3000);
-      setTimeout(()=>{
-        this.speed = 0;
-        this.x -= this.speed;
-        this.node.style.left = `${this.x}px`;
-      },6000)
+    // } else if (this.type === "boss"){
+    //   setTimeout(() => {
+    //     this.speed = 3;
+    //     this.x -= this.speed;
+    //     this.node.style.left = `${this.x}px`;
+    //   }, 3000);
+    //   setTimeout(()=>{
+    //     this.speed = 0;
+    //     this.x -= this.speed;
+    //     this.node.style.left = `${this.x}px`;
+    //   },6000)
     }else if (this.type === "sky") {
       this.y += this.speed;
       this.node.style.top = `${this.y}px`;

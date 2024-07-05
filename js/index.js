@@ -26,7 +26,7 @@ let lives = document.querySelector("#lives");
 let points = document.querySelector("#points");
 let enemyCount = document.querySelector("#enemyCount");
 let gameName = document.querySelector("#player-name")
-
+let gameHasEnded = false
 //local storage
 const scoreboard = document.querySelector("#scoreboard");
 let playerName = null;
@@ -55,6 +55,7 @@ function startGame() {
   skyEnemyInterval = setInterval (()=>{
     skyEnemy();
   },600)
+  gameHasEnded = false
 }
 function verifyLocalStorage() {
   if (!localStorage.getItem("score")) {
@@ -104,9 +105,16 @@ function enemySpawn() {
 }
 function skyEnemy() {
   let numEnemyCount = Number(enemyCount.innerText);
-  if (numEnemyCount >= 25) {
+  if (numEnemyCount >= 10) {
     let skyEnemy = new Enemy("sky");
     enemyArr.push(skyEnemy);
+  }
+  if (numEnemyCount >= 20) {
+    let skyEnemy = new Enemy("sky");
+    enemyArr.push(skyEnemy);
+    let skyEnemy2 = new Enemy("sky");
+    enemyArr.push(skyEnemy2);
+    
   }
 }
 function shoot() {
@@ -150,8 +158,9 @@ function projectileEnemycollision() {
           enemy.node.remove();
           points.innerText++;
           enemyCount.innerText++;
-          gameOver();
-          alert("congrats you won!");
+          charaObj.lives = 0
+          alert("Congrats you won!")
+          playwin()
         }
       }
     });
@@ -179,6 +188,8 @@ function bulletDeletion() {
   }
 }
 function updateScore() {
+  if(gameHasEnded) return
+  gameHasEnded = true
   //recibir local storage y parse
   const allScoresString = localStorage.getItem("score");
   const allScoreArr = JSON.parse(allScoresString);
@@ -205,6 +216,7 @@ function updateScore() {
 }
 function gameOver() {
   if (charaObj.lives === 0) {
+    if(!gameHasEnded){
     clearInterval(mainIntervalId);
     clearInterval(enemyInterval);
     clearInterval(skyEnemyInterval)
@@ -215,6 +227,8 @@ function gameOver() {
     updateScore();
     stopBGM();
     playGameover();
+    gameHasEnded = true
+    }
   }
 }
 function resetGame() {
@@ -230,7 +244,7 @@ function resetGame() {
   document.querySelector("#hp1").style.display = "flex";
 
   //enemies
-
+  isSpawning = true
   for (let i = 0; i < enemyArr.length; i++) {
     enemyArr[i].node.remove();
   }
@@ -296,6 +310,7 @@ nameSubmit.addEventListener("click", () => {
 
 //audio
 let bgm = document.querySelector("#bgm");
+let win = document.querySelector("#win");
 let playerDMG = document.querySelector("#playerDMG");
 let gameoversfx = document.querySelector("#gameoversfx");
 function playPlayerDMG() {
@@ -305,6 +320,10 @@ function playPlayerDMG() {
 function playBGM() {
   bgm.currentTime = 0;
   bgm.play();
+}
+function playwin() {
+  win.currentTime = 0;
+  win.play();
 }
 function stopBGM() {
   bgm.currentTime = 0;
