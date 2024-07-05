@@ -16,7 +16,7 @@ class Player {
 
     this.node.style.position = "absolute";
     this.isJumping = false;
-    this.lives = 5000;
+    this.lives = 3;
     this.gravSpeed = 8;
     this.isInvulnerable = false;
 
