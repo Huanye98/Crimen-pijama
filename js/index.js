@@ -3,36 +3,37 @@
 let startScreen = document.querySelector("#start-screen");
 let endScreen = document.querySelector("#end-screen");
 let gameScreen = document.querySelector("#game-screen");
+let gameBox = document.querySelector("#game-box");
+
 //BG
 let back = document.querySelector("#back");
 let middle = document.querySelector("#middle");
 let front = document.querySelector("#front");
 
-//gamebox
-let gameBox = document.querySelector("#game-box");
 //objects
 let charaObj = null;
 let badGuyObj = null;
 let enemyArr = [];
 let projectilesArr = [];
+
 //intervals
 let mainIntervalId = null;
 let enemyInterval = null;
 let isSpawning = true;
-let skyEnemyInterval = null
+let skyEnemyInterval = null;
 
 //nodes
 let lives = document.querySelector("#lives");
 let points = document.querySelector("#points");
 let enemyCount = document.querySelector("#enemyCount");
-let gameName = document.querySelector("#player-name")
-let gameHasEnded = false
+let gameName = document.querySelector("#player-name");
+let gameHasEnded = false;
+
 //local storage
 const scoreboard = document.querySelector("#scoreboard");
 let playerName = null;
 
 //Start
-
 function startGame() {
   //set up
   startScreen.style.display = "none";
@@ -50,12 +51,11 @@ function startGame() {
 
   enemyInterval = setInterval(() => {
     enemySpawn();
-  
   }, 1100);
-  skyEnemyInterval = setInterval (()=>{
+  skyEnemyInterval = setInterval(() => {
     skyEnemy();
-  },600)
-  gameHasEnded = false
+  }, 600);
+  gameHasEnded = false;
 }
 function verifyLocalStorage() {
   if (!localStorage.getItem("score")) {
@@ -114,14 +114,12 @@ function skyEnemy() {
     enemyArr.push(skyEnemy);
     let skyEnemy2 = new Enemy("sky");
     enemyArr.push(skyEnemy2);
-    
   }
 }
 function shoot() {
   let pew = new Projectile(charaObj.x, charaObj.y);
   projectilesArr.push(pew);
 }
-
 function PlayerEnemycollision() {
   enemyArr.forEach((e) => {
     if (
@@ -158,51 +156,51 @@ function projectileEnemycollision() {
           enemy.node.remove();
           points.innerText++;
           enemyCount.innerText++;
-          charaObj.lives = 0
-          alert("Congrats you won!")
-          playwin()
+          charaObj.lives = 0;
+          alert("Congrats you won!");
+          playwin();
         }
       }
     });
   });
 }
-
 function EnemyDeletion() {
   let firstEnemy = enemyArr[0];
-  if (firstEnemy && firstEnemy.x - firstEnemy.w <= 0) {
-    enemyArr.shift();
-    firstEnemy.node.remove();
-  }
-  if(firstEnemy && firstEnemy.type === "sky" && firstEnemy.y >= gameBox.offsetHeight){
-    enemyArr.shift()
-    firstEnemy.node.remove()
-  }
-}
-function bulletDeletion() {
-  for (let i = projectilesArr.length - 1; i >= 0; i--) {
-    let bullet = projectilesArr[i];
-    if (bullet && bullet.x >= gameBox.offsetWidth) {
-      projectilesArr.splice(i, 1);
-      bullet.node.remove();
+  if (firstEnemy.type === "sky") {
+    if (firstEnemy.y >= gameBox.offsetHeight) {
+      enemyArr.shift();
+      firstEnemy.node.remove();
+    }
+  } else {
+    if (firstEnemy && firstEnemy.x - firstEnemy.w <= 0) {
+      enemyArr.shift();
+      firstEnemy.node.remove();
     }
   }
 }
+function bulletDeletion() {
+    let bullet = projectilesArr[0];
+    if (bullet && bullet.x >= gameBox.offsetWidth) {
+      projectilesArr.shift()
+      bullet.node.remove();
+    }
+}
 function updateScore() {
-  if(gameHasEnded) return
-  gameHasEnded = true
+  if (gameHasEnded) return;
+  gameHasEnded = true;
   //recibir local storage y parse
   const allScoresString = localStorage.getItem("score");
   const allScoreArr = JSON.parse(allScoresString);
   if (playerName === null) {
     playerName = "Energúmeno";
   }
-  const newScore = { userName: playerName, score: points.innerText }
+  const newScore = { userName: playerName, score: points.innerText };
   allScoreArr.push(newScore);
   allScoreArr.sort((elemento1, elemento2) => {
     return elemento2.score - elemento1.score;
   });
   allScoreArr.splice(5, allScoreArr.length);
- 
+
   let newString = JSON.stringify(allScoreArr);
   localStorage.setItem("score", newString);
 
@@ -214,20 +212,21 @@ function updateScore() {
     scoreboard.append(nameScore);
   });
 }
+//GameOver & reset
 function gameOver() {
   if (charaObj.lives === 0) {
-    if(!gameHasEnded){
-    clearInterval(mainIntervalId);
-    clearInterval(enemyInterval);
-    clearInterval(skyEnemyInterval)
-    endScreen.style.display = "flex";
-    gameScreen.style.display = "none";
-    mainIntervalId = null;
-    enemyInterval = null;
-    updateScore();
-    stopBGM();
-    playGameover();
-    gameHasEnded = true
+    if (!gameHasEnded) {
+      clearInterval(mainIntervalId);
+      clearInterval(enemyInterval);
+      clearInterval(skyEnemyInterval);
+      endScreen.style.display = "flex";
+      gameScreen.style.display = "none";
+      mainIntervalId = null;
+      enemyInterval = null;
+      updateScore();
+      stopBGM();
+      playGameover();
+      gameHasEnded = true;
     }
   }
 }
@@ -238,13 +237,13 @@ function resetGame() {
   //ui
   points.innerText = "0";
   lives.innerText = 3;
-  enemyCount.innerText = "0"
+  enemyCount.innerText = "0";
   document.querySelector("#hp3").style.display = "flex";
   document.querySelector("#hp2").style.display = "flex";
   document.querySelector("#hp1").style.display = "flex";
 
   //enemies
-  isSpawning = true
+  isSpawning = true;
   for (let i = 0; i < enemyArr.length; i++) {
     enemyArr[i].node.remove();
   }
@@ -257,7 +256,10 @@ function resetGame() {
   startGame();
 }
 
+
 //Event listeners
+
+//selector Variables
 //start
 let startBtn = document.querySelector("#start-btn");
 //text input
@@ -271,8 +273,8 @@ let replay = document.querySelector("#replay");
 startBtn.addEventListener("click", () => {
   startGame();
   playBGM();
-  document.querySelector("h1").style.display = "block"
-  gameName.innerText = playerName
+  document.querySelector("h1").style.display = "block";
+  gameName.innerText = playerName;
 });
 //replay
 replay.addEventListener("click", () => {
@@ -291,16 +293,16 @@ window.addEventListener("keydown", (e) => {
   if (e.code === "Space") {
     charaObj.jump();
   }
-  window.addEventListener("keyup",()=>{
-    charaObj.idle()
-  })
+  window.addEventListener("keyup", () => {
+    charaObj.idle();
+  });
 });
 //shoot
 gameBox.addEventListener("mousedown", () => {
   shoot();
 });
-//local storage
 
+//local storage
 nameSubmit.addEventListener("click", () => {
   playerName = nameInput.value;
   nameInput.placeholder = "Name saved!";
@@ -313,10 +315,10 @@ let bgm = document.querySelector("#bgm");
 let win = document.querySelector("#win");
 let playerDMG = document.querySelector("#playerDMG");
 let gameoversfx = document.querySelector("#gameoversfx");
+
 function playPlayerDMG() {
   playerDMG.play();
 }
-
 function playBGM() {
   bgm.currentTime = 0;
   bgm.play();

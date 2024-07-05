@@ -1,5 +1,5 @@
 class Projectile{
-    constructor(positionX,positionY,type){
+    constructor(positionX,positionY){
         this.node = document.createElement("img")
         this.node.src = "./images/Ice Particle.png"
         gameBox.append(this.node)

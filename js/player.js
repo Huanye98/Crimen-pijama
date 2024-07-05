@@ -23,31 +23,30 @@ class Player {
     this.middleX = 0;
     this.frontX = 0;
   }
-  idle(){
-    this.node.src = "./images/idle.gif"
+  idle() {
+    this.node.src = "./images/idle.gif";
   }
   moveLeft() {
-    if(this.x <= 50){
-      this.x = 50
+    if (this.x <= 50) {
+      this.x = 50;
       this.node.style.left = `${this.x}px`;
     }
     this.x -= 50;
     this.node.style.left = `${this.x}px`;
-    charaObj.node.src = "./images/left.gif"
-    this.moveBackground(5,10)
-    
+    charaObj.node.src = "./images/left.gif";
+    this.moveBackground(5, 10);
   }
   moveRight() {
-    if(this.x >= gameBox.offsetWidth - 100){
-      this.x = gameBox.offsetWidth -100
+    if (this.x >= gameBox.offsetWidth - 100) {
+      this.x = gameBox.offsetWidth - 100;
       this.node.style.left = `${this.x}px`;
     }
     this.x += 50;
     this.node.style.left = `${this.x}px`;
-    charaObj.node.src = "./images/right.gif"
-    this.moveBackground(-5,-10)
+    charaObj.node.src = "./images/right.gif";
+    this.moveBackground(-5, -10);
   }
-  moveBackground(middleSpeed, frontSpeed){
+  moveBackground(middleSpeed, frontSpeed) {
     this.middleX += middleSpeed;
     this.frontX += frontSpeed;
 
@@ -59,7 +58,7 @@ class Player {
   }
   jump() {
     if (this.isJumping) return;
-    this.node.src = "./images/Jump (32x32).png"
+    this.node.src = "./images/Jump (32x32).png";
     this.isJumping = true;
     this.y -= 30;
     let jumpIntervalId = setInterval(() => {
@@ -68,7 +67,7 @@ class Player {
     }, 10);
     setTimeout(() => {
       clearInterval(jumpIntervalId);
-      this.node.src = "./images/idle.gif"
+      this.node.src = "./images/idle.gif";
     }, 100);
   }
   gravity() {
@@ -76,16 +75,14 @@ class Player {
       this.y = gameBox.offsetHeight - 100;
       this.isJumping = false;
       return;
-      
     }
     this.y += this.gravSpeed;
     this.node.style.top = `${this.y}px`;
-    this.node.src = "./images/Fall (32x32).png"
+    this.node.src = "./images/Fall (32x32).png";
   }
-
   hp() {
     if (this.lives === 3) {
-      document.querySelector("#hp").style.display = "flex"
+      document.querySelector("#hp").style.display = "flex";
     }
     if (this.lives === 2) {
       document.querySelector("#hp3").style.display = "none";
@@ -109,7 +106,7 @@ class Player {
   startInvulnerable() {
     this.isInvulnerable = true;
     this.node.style.backgroundColor = "red";
-    this.node.style.padding = "0"
+    this.node.style.padding = "0";
     setTimeout(() => {
       this.isInvulnerable = false;
       this.node.style.backgroundColor = "transparent";
